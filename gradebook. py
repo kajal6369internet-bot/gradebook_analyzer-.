@@ -1,0 +1,96 @@
+name=Kajal
+roll no=2501360019
+date=5/11/25
+assignment titel=anaylzing and  Reporting Student Grades
+
+class Student:
+    def _init_(self, name, marks):
+        self.name = name
+        self.marks = marks
+        self.average = sum(marks) / len(marks)
+        self.grade = self.assign_grade()
+
+    def assign_grade(self):
+        if self.average >= 90:
+            return 'A+'
+        elif self.average >= 80:
+            return 'A'
+        elif self.average >= 70:
+            return 'B'
+        elif self.average >= 60:
+            return 'C'
+        elif self.average >= 50:
+            return 'D'
+        else:
+            return 'F'
+class GradeBook:
+    def _init_(self):
+        self.students = []
+
+    def add_student(self, name, marks):
+        student = Student(name, marks)
+        self.students.append(student)
+
+    def display_report(self):
+        print("\n------- GradeBook Report -------")
+        print(f"{'Name':<15} {'Average':<10} {'Grade':<8}")
+        print("-" * 35)
+        for s in self.students:
+            print(f"{s.name:<15} {s.average:<10.2f} {s.grade:<8}")
+        print("-" * 35)
+
+    def show_statistics(self):
+        all_averages = [s.average for s in self.students]
+        print("\nClass Statistics:")
+        print(f"Mean: {statistics.mean(all_averages):.2f}")
+        print(f"Median: {statistics.median(all_averages):.2f}")
+        print(f"Highest: {max(all_averages):.2f}")
+        print(f"Lowest: {min(all_averages):.2f}")
+
+    def show_pass_fail_summary(self):
+        passed = [s.name for s in self.students if s.grade != 'F']
+        failed = [s.name for s in self.students if s.grade == 'F']
+        print("\nPass/Fail Summary:")
+        print(f"Passed Students ({len(passed)}): {', '.join(passed) if passed else 'None'}")
+        print(f"Failed Students ({len(failed)}): {', '.join(failed) if failed else 'None'}")
+
+# ----------------- Main Program -----------------
+def main():
+    print("Welcome to GradeBook Analyzer")
+    gradebook = GradeBook()
+
+    # Pre-filled student data
+    data = {
+        "Kajal": [85, 78, 92],
+        "Riya": [45, 56, 60],
+        "Aman": [72, 68, 75]
+    }
+
+    for name, marks in data.items():
+        gradebook.add_student(name, marks)
+
+    gradebook.display_report()
+    gradebook.show_statistics()
+    gradebook.show_pass_fail_summary()
+
+if _name_ == "_main_":
+    main()
+Welcome to GradeBook Analyzer
+
+------- GradeBook Report -------
+Name            Average    Grade   
+-----------------------------------
+Kajal           85.00      A       
+Riya            53.67      D       
+Aman            71.67      B       
+-----------------------------------
+
+Class Statistics:
+Mean: 70.11
+Median: 71.67
+Highest: 85.00
+Lowest: 53.67
+
+Pass/Fail Summary:
+Passed Students (3): Kajal, Riya, Aman
+Failed Students (0): None
