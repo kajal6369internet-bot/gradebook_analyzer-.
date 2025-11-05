@@ -29,15 +29,35 @@ def display_table(students):
 def main():
     students = {}
     n = int(input("Enter number of students: "))
-    
+
     for i in range(n):
         name = input(f"Enter name of student {i+1}: ")
         marks = float(input(f"Enter marks of {name}: "))
         students[name] = marks
-    
+
     marks_list = list(students.values())
     
     mean_marks = statistics.mean(marks_list)
     median_marks = statistics.median(marks_list)
     min_marks = min(marks_list)
-    max
+    max_marks = max(marks_list)
+
+    pass_students = [name for name, marks in students.items() if marks >= 50]
+    fail_students = [name for name, marks in students.items() if marks < 50]
+
+    print("\n===== GradeBook Report =====")
+    display_table(students)
+
+    print("\n----- Statistics -----")
+    print(f"Average Marks: {mean_marks:.2f}")
+    print(f"Median Marks: {median_marks:.2f}")
+    print(f"Highest Marks: {max_marks}")
+    print(f"Lowest Marks: {min_marks}")
+
+    print("\n----- Summary -----")
+    print(f"Total Students: {n}")
+    print("Passed: ", ', '.join(pass_students) if pass_students else "None")
+    print("Failed: ", ', '.join(fail_students) if fail_students else "None")
+
+if _name_ == "_main_":
+    main()
